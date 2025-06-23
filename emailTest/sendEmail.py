@@ -8,7 +8,11 @@ import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-def main(args):
+from dotenv import load_dotenv
+load_dotenv()
+import os
+
+def sendEmail(args):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
@@ -17,7 +21,7 @@ def main(args):
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
-    #target_api_url = os.getenv("TARGET_API_URL")
+    # target_api_url = os.getenv("TARGET_API_URL")
     sender_email = os.getenv("SENDER_EMAIL")
     sender_password = os.getenv("SENDER_EMAIL_PASSWORD")
     receiver_email = os.getenv("RECEIVER_EMAIL")
@@ -30,9 +34,13 @@ def main(args):
         return {"statusCode": 500, "body": "Configuration error."}
 
     # --- 2. Fetch data from the API ---
-    # removed
+    # removed, not needed for email test
 
     # --- 4. Send Notification Email ---
+
+    # notification_subject = "Test Email Subject"
+    # notification_content = "This is a test email content."
+
     try:
         msg = MIMEMultipart()
         msg['From'] = sender_email
@@ -51,7 +59,6 @@ def main(args):
 
     except smtplib.SMTPAuthenticationError:
         print("Error: SMTP Authentication failed. Check your email, password, and app password settings.")
-        print("Note: For Gmail, you might need to enable 'Less secure app access' or use an 'App password'.")
     except smtplib.SMTPException as e:
         print(f"Error sending email: {e}")
     except Exception as e:
@@ -64,14 +71,14 @@ def main(args):
 if __name__ == "__main__":
     # Set dummy environment variables for local testing
     #os.environ["TARGET_API_URL"] = "https://jsonplaceholder.typicode.com/posts/1"
-    os.environ["SENDER_EMAIL"] = "your_test_sender_email@example.com"
-    os.environ["SENDER_EMAIL_PASSWORD"] = "your_test_password"
-    os.environ["RECEIVER_EMAIL"] = "your_test_receiver_email@example.com"
-    os.environ["SMTP_SERVER"] = "smtp.your_provider.com" # E.g., smtp.gmail.com
-    os.environ["SMTP_PORT"] = "587"
+#     os.environ["SENDER_EMAIL"] = "your_test_sender_email@example.com"
+#     os.environ["SENDER_EMAIL_PASSWORD"] = "your_test_password"
+#     os.environ["RECEIVER_EMAIL"] = "your_test_receiver_email@example.com"
+#     os.environ["SMTP_SERVER"] = "smtp.your_provider.com" # E.g., smtp.gmail.com
+#     os.environ["SMTP_PORT"] = "587" 
 
     notification_subject = "Test Email Subject"
     notification_content = "This is a test email content."
 
     # Call the main function
-    main({})
+    sendEmail({})
