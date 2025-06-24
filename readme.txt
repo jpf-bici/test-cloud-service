@@ -234,7 +234,8 @@ Here's how to set up an App Password for your Gmail account:
 
 ### Using the App Password in Your Python Script
 
-Now, in your `api-monitor/__main__.py` file (and in your `project.yml` for DigitalOcean Functions), you will use this 16-character App Password as the `SENDER_EMAIL_PASSWORD` instead of your regular Gmail password.
+Now, in your `api-monitor/__main__.py` file (and in your `project.yml` for DigitalOcean Functions), 
+you will use this 16-character App Password as the `SENDER_EMAIL_PASSWORD` instead of your regular Gmail password.
 
 **Your `project.yml` (example):**
 
@@ -251,7 +252,8 @@ Now, in your `api-monitor/__main__.py` file (and in your `project.yml` for Digit
 # ... (rest of project.yml)
 ```
 
-**Your Python script (`__main__.py`) already uses `os.getenv("SENDER_EMAIL_PASSWORD")`, so no code change is needed there once the environment variable is updated.**
+**Your Python script (`__main__.py`) already uses `os.getenv("SENDER_EMAIL_PASSWORD")`, 
+so no code change is needed there once the environment variable is updated.**
 
 -----
 
@@ -262,4 +264,7 @@ Now, in your `api-monitor/__main__.py` file (and in your `project.yml` for Digit
   * **Security for Credentials:** While App Passwords are more secure than your main password, storing any sensitive credentials (even App Passwords) directly in `project.yml` (even if encrypted at rest) should be done with care. For a small personal project, it's generally acceptable. For production-grade applications, consider DigitalOcean's managed secrets or a dedicated secrets management service.
   * **Error Handling:** Your current script has good error handling for SMTP exceptions. Make sure you monitor your DigitalOcean Function logs if you suspect email delivery issues.
 
-For anything beyond simple personal notifications, I strongly recommend dedicated transactional email services like **SendGrid**, **Mailgun**, or **Amazon SES**. They offer free tiers suitable for many projects, handle deliverability, provide better analytics, and have more robust APIs for integration.
+For anything beyond simple personal notifications, 
+I strongly recommend dedicated transactional email services like 
+**SendGrid**, **Mailgun**, or **Amazon SES**. They offer free tiers suitable for many projects, 
+handle deliverability, provide better analytics, and have more robust APIs for integration.

@@ -2,10 +2,7 @@
 import timezone 
 import timeZoneFinder
 
-
 import requests
-import smtplib
-import json
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -13,7 +10,7 @@ import os
 
 api_key = os.getenv("TARGET_API_KEY")
 
-def getWeather(lat, long):
+def getWeather(lat, lon):
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
@@ -21,7 +18,7 @@ def getWeather(lat, long):
     api_key = os.getenv("TARGET_API_KEY")
 
     # find timezone for the given lat, long
-    loc_timezone = timeZoneFinder.find_timezone(lat, long)
+    loc_timezone = timeZoneFinder.find_timezone(lat, lon)
 
     params = {
         "lat": lat,

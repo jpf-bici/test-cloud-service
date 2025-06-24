@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 load_dotenv()
 import os
 
-def sendEmail(args):
+def sendEmail(notification_content="This is a test email content."):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
@@ -23,10 +23,11 @@ def sendEmail(args):
     # These variables are set in your project.yml
     # target_api_url = os.getenv("TARGET_API_URL")
     sender_email = os.getenv("SENDER_EMAIL")
-    sender_password = os.getenv("SENDER_EMAIL_PASSWORD")
+    sender_password = os.getenv("SENDER_PASSWORD")
     receiver_email = os.getenv("RECEIVER_EMAIL")
     smtp_server = os.getenv("SMTP_SERVER")
     smtp_port = int(os.getenv("SMTP_PORT", 587)) # Default to 587 if not set
+    notification_subject = "Test Email Subject"
 
     # Basic validation for essential variables; removed api url
     if not all([sender_email, sender_password, receiver_email, smtp_server]):
@@ -80,5 +81,5 @@ if __name__ == "__main__":
     notification_subject = "Test Email Subject"
     notification_content = "This is a test email content."
 
-    # Call the main function
-    sendEmail({})
+    
+    sendEmail(notification_content=notification_content)
