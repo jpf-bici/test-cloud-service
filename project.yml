@@ -1,10 +1,37 @@
-tbd# project.yml
-# ... (other parts of your project.yml)
-        environment:
-          #TARGET_API_URL: "https://api.openweathermap.org/data/2.5/onecall?lat=34.05&lon=-118.25&exclude=minutely,daily&appid={your_open_weather_api_key}" # Replace with actual API & your key
+# This is a configuration file for a cloud service function that monitors an API
+# and sends email notifications based on the API's response.
+# It is designed to run on a schedule, specifically every hour.
+# The function is written in Python and uses environment variables for configuration.
+# The function's main logic is contained in the __main__.py file located in the api-monitor directory.
+# The function is set up to use a specific Python runtime and has defined routes and triggers.
+# The environment variables include API keys, email credentials, and SMTP server details.
+# This file is used to deploy the function to the cloud service platform.
+# Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
+```yaml
+# project.yml
+apiVersion: 1.0
+functions:
+  - name: api-monitor # The name of your function
+    source_dir: api-monitor # The directory containing your __main__.py
+    runtime: python:3.9 # Specify Python runtime
+    main: __main__.py # The entry point file
+    
+    environment: # Define environment variables for your function
+    
+          TARGET_API_KEY="a83c5b4eede4d997dc83a9105c152aa4"
           SENDER_EMAIL: "jpf.test.81@gmail.com"
-          SENDER_EMAIL_PASSWORD: "mxzvlexszizktngq" # <<< USE THIS GENERATED PASSWORD
+          SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE THIS GENERATED PASSWORD
           RECEIVER_EMAIL: "jorgefpont@gmail.com"
           SMTP_SERVER: "smtp.gmail.com"
           SMTP_PORT: "587"
-# ... (rest of project.yml)
+
+    routes: # No HTTP route needed for a scheduled function
+      - method: POST
+        path: /
+    
+    # Add a trigger for scheduling
+    triggers:
+      - name: hourly-schedule
+        type: schedule
+        schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
+```

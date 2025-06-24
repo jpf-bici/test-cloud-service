@@ -14,7 +14,7 @@ def getWeather(lat, lon):
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
-    target_api_url = "https://api.openweathermap.org/data/3.0/onecall"
+    target_api_url = os.getenv("TARGET_API_URL")
     api_key = os.getenv("TARGET_API_KEY")
 
     # find timezone for the given lat, long
