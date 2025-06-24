@@ -9,7 +9,7 @@ import getWeather
 import sendEmail
 
 
-def api_monitor(lat, lon):
+def main(lat, lon):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
@@ -35,7 +35,7 @@ def api_monitor(lat, lon):
     weather = getWeather.getWeather(lat, lon) # Example coordinates for testing
     print(f"Weather data fetched: {weather}")
 
-    # --- 4. Send Notification Email ---    
+    # --- 3. Send Notification Email ---    
     sendEmail.sendEmail(weather)
 
 # This part is for local testing if you want to run it without DigitalOcean
@@ -51,6 +51,6 @@ if __name__ == "__main__":
 
     # Call the main function
     # Menlo Park latitude and Longitude at our house
-    lat=37.433
-    lon=-122.207
-    api_monitor(lat=lat, lon=lon)
+    lat = 37.433
+    lon = -122.207
+    main(lat=lat, lon=lon)
