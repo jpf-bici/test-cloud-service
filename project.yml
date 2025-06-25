@@ -1,4 +1,4 @@
-apiVersion: 1.0
+#apiVersion: 1.0
 
 # project.yml
 # This is a configuration file for a cloud service function that monitors an API
@@ -11,28 +11,37 @@ apiVersion: 1.0
 # This file is used to deploy the function to the cloud service platform.
 # Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
 
+parameters: {} # project scope
+    # param1: value
+environment: {}
+    # env1: value
 
-functions:
-  - name: api-monitor # The name of your function
-    source_dir: api-monitor # The directory containing your __main__.py
-    runtime: python:3.10 # Specify Python runtime
-    main: __main__.py # The entry point file
-    
-    environment: # Define environment variables for your function
-      TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
-      SENDER_EMAIL: "jpf.test.81@gmail.com"
-      SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE GENERATED PASSWORD
-      RECEIVER_EMAIL: "jorgefpont@gmail.com"
-      SMTP_SERVER: "smtp.gmail.com"
-      SMTP_PORT: "587"
+packages:
+  - name: api-monitor # The name of your package
+    shared: false # This package is not shared with other projects
+    environment: {} # No specific environment variables for the package
+    parameters: {} # No specific parameters for the package
+    functions:
+      - name: api-monitor # The name of your function
+        source_dir: api-monitor # The directory containing your __main__.py
+        runtime: python:3.10 # Specify Python runtime
+        main: __main__.py # The entry point file
+        
+        environment: # Define environment variables for your function
+          TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
+          SENDER_EMAIL: "jpf.test.81@gmail.com"
+          SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE GENERATED PASSWORD
+          RECEIVER_EMAIL: "jorgefpont@gmail.com"
+          SMTP_SERVER: "smtp.gmail.com"
+          SMTP_PORT: "587"
 
-    routes: # No HTTP route needed for a scheduled function
-      - method: POST
-        path: /
-    
-    # Add a trigger for scheduling
-    triggers:
-      - name: hourly-schedule
-        type: schedule
-        schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
+        routes: # No HTTP route needed for a scheduled function
+          - method: POST
+            path: /
+        
+        # Add a trigger for scheduling
+        triggers:
+          - name: hourly-schedule
+            type: schedule
+            schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
 
