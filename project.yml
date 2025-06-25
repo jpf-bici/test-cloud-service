@@ -7,7 +7,7 @@
 # The environment variables include API keys, email credentials, and SMTP server details.
 # This file is used to deploy the function to the cloud service platform.
 # Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
-```yaml
+
 # project.yml
 apiVersion: 1.0
 functions:
@@ -17,8 +17,8 @@ functions:
     main: __main__.py # The entry point file
     
     environment: # Define environment variables for your function
-    
-          TARGET_API_KEY="a83c5b4eede4d997dc83a9105c152aa4"
+
+          TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
           SENDER_EMAIL: "jpf.test.81@gmail.com"
           SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE THIS GENERATED PASSWORD
           RECEIVER_EMAIL: "jorgefpont@gmail.com"
@@ -34,4 +34,4 @@ functions:
       - name: hourly-schedule
         type: schedule
         schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
-```
+
