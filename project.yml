@@ -1,5 +1,6 @@
-#apiVersion: 1.0
+apiVersion: 1.0
 
+# project.yml
 # This is a configuration file for a cloud service function that monitors an API
 # and sends email notifications based on the API's response.
 # It is designed to run on a schedule, specifically every hour.
@@ -10,18 +11,17 @@
 # This file is used to deploy the function to the cloud service platform.
 # Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
 
-# project.yml
+
 functions:
   - name: api-monitor # The name of your function
     source_dir: api-monitor # The directory containing your __main__.py
-    runtime: python:3.9 # Specify Python runtime
+    runtime: python:3.10 # Specify Python runtime
     main: __main__.py # The entry point file
     
     environment: # Define environment variables for your function
-
       TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
       SENDER_EMAIL: "jpf.test.81@gmail.com"
-      SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE THIS GENERATED PASSWORD
+      SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE GENERATED PASSWORD
       RECEIVER_EMAIL: "jorgefpont@gmail.com"
       SMTP_SERVER: "smtp.gmail.com"
       SMTP_PORT: "587"
