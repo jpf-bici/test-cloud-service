@@ -9,7 +9,7 @@
 # Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
 
 # project.yml
-apiVersion: 1.0
+# apiVersion: 1.0
 functions:
   - name: api-monitor # The name of your function
     source_dir: api-monitor # The directory containing your __main__.py
