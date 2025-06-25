@@ -1,4 +1,4 @@
-apiVersion: 1.0
+#apiVersion: 1.0
 
 # This is a configuration file for a cloud service function that monitors an API
 # and sends email notifications based on the API's response.
