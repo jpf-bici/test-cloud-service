@@ -44,4 +44,3 @@ packages:
           - name: hourly-schedule
             type: schedule
             schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
-
