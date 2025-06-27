@@ -17,13 +17,13 @@ environment: {}
     # env1: value
 
 packages:
-  - name: api-monitor # The name of your package
+  - name: weather-info-app # The name of your package
     shared: false # This package is not shared with other projects
     environment: {} # No specific environment variables for the package
     parameters: {} # No specific parameters for the package
     functions:
-      - name: api-monitor # The name of your function
-        source_dir: api-monitor # The directory containing your __main__.py
+      - name: weather-info-app # The name of your function
+        source_dir: weather-info-app # The directory containing your __main__.py
         runtime: python:3.10 # Specify Python runtime
         main: __main__.py # The entry point file
         
