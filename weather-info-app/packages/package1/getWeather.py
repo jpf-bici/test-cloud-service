@@ -4,8 +4,13 @@ import timeZoneFinder
 
 import requests
 
-from dotenv import load_dotenv
-load_dotenv()
+# No 'import dotenv' or 'dotenv.load_dotenv()' needed here
+# DigitalOcean Functions injects environment variables directly from project.yml
+# ====
+# from dotenv import load_dotenv
+# load_dotenv()
+# ====
+
 import os
 
 api_key = os.getenv("TARGET_API_KEY")
@@ -98,7 +103,11 @@ def getWeather(lat, lon):
 
 
 if __name__=="__main__":
-        # example, Menlo Park, CA
+    
+    from dotenv import load_dotenv
+    load_dotenv()
+    
+    # example, Menlo Park, CA
     lat=37.433
     lon=-122.207
     weather = getWeather(lat, lon)

@@ -1,0 +1,34 @@
+[
+  {
+    "apihost": "https://faas-sfo3-7872a1dd.doserverless.co",
+    "namespace": "fn-5c260656-49db-4abb-87bd-b5b6a640d594",
+    "packageVersions": {
+      "package1": {
+        "version": "0.0.1",
+        "digest": "9fee3809e7828edcf088af214b8549c13ea1d2697cf53024190bf4fb9d39b269"
+      }
+    },
+    "actionVersions": {
+      "package1/__main__": {
+        "version": "0.0.1",
+        "digest": "8685159fa1de3afcd5d4d0122ff6645fed53acf9bf0b5e8018eedffdd2c4a299"
+      },
+      "package1/getWeather": {
+        "version": "0.0.1",
+        "digest": "2756d251fcbdff5cc4440ec8cad93aad802e2f0c4bb5b92bf6ec5317c0b69a84"
+      },
+      "package1/sendEmail": {
+        "version": "0.0.1",
+        "digest": "1e7c41e134a0dcd0861802e3378b612aafe098ff2e4611d75c576d73ed653477"
+      },
+      "package1/timeZoneFinder": {
+        "version": "0.0.1",
+        "digest": "0adbb49863bb303d05726d4e886c3e58874113f2f55a24c7fb853327eec1c6df"
+      },
+      "package1/timezone": {
+        "version": "0.0.1",
+        "digest": "976dafaee492453dad55202dc52c7fb1846bd1f666a72ed7d534e5708c0cbc28"
+      }
+    }
+  }
+]

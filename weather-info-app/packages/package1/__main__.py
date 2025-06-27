@@ -2,8 +2,12 @@
 
 import os
 
-from dotenv import load_dotenv
-load_dotenv()
+# No 'import dotenv' or 'dotenv.load_dotenv()' needed here
+# DigitalOcean Functions injects environment variables directly from project.yml
+# ====
+# from dotenv import load_dotenv
+# load_dotenv()
+# ====
 
 import getWeather 
 import sendEmail
@@ -41,6 +45,10 @@ def main(lat, lon):
 # This part is for local testing if you want to run it without DigitalOcean
 # It's not executed when deployed as a DigitalOcean Function
 if __name__ == "__main__":
+
+    from dotenv import load_dotenv
+    load_dotenv()
+
     # # Set dummy environment variables for local testing
     # os.environ["TARGET_API_URL"] = "https://jsonplaceholder.typicode.com/posts/1"
     # os.environ["SENDER_EMAIL"] = "your_test_sender_email@example.com"
