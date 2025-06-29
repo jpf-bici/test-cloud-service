@@ -15,7 +15,7 @@ import os
 
 api_key = os.getenv("TARGET_API_KEY")
 
-def getWeather(lat, lon):
+def getWeather(lat, lon, place):
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
@@ -81,12 +81,12 @@ def getWeather(lat, lon):
         main_weather = current_weather["weather"][0]["main"]
 
         res = f"""
-        Current Weather in {lat}, {lon}:
-        Current Time: {current_time} , {loc_timezone}
-        Temperature: {temperature}°C , {round((9/5)*temperature + 32, 2)}°F
-        Feels Like: {feels_like}°C , {round((9/5)*feels_like + 32, 2)}°F
+        Current Weather in {place} ({lat}, {lon})        
+        Current Time: {current_time}, {loc_timezone}
+        Temperature: {temperature}°C, {round((9/5)*temperature + 32, 2)}°F
+        Feels Like: {feels_like}°C, {round((9/5)*feels_like + 32, 2)}°F
         Humidity: {humidity}%
-        Wind Speed: {wind_speed} m/s , {round(wind_speed * 2.23694, 2)} mph
+        Wind Speed: {wind_speed} m/s, {round(wind_speed * 2.23694, 2)} mph
         Wind Direction: {wind_direction} deg
         Weather Condition: {main_weather} ({weather_description})"""
 
@@ -107,8 +107,8 @@ if __name__=="__main__":
     from dotenv import load_dotenv
     load_dotenv()
     
-    # example, Menlo Park, CA
     lat=37.433
     lon=-122.207
-    weather = getWeather(lat, lon)
+    place = "Menlo Park, CA"
+    weather = getWeather(lat, lon, place)
     print(weather)

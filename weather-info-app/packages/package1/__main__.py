@@ -13,7 +13,7 @@ import getWeather
 import sendEmail
 
 
-def main(lat, lon):
+def main(lat, lon, place):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
@@ -36,7 +36,7 @@ def main(lat, lon):
         return {"statusCode": 500, "body": "Configuration error."}
 
     # --- 2. Fetch data from the API ---
-    weather = getWeather.getWeather(lat, lon) # Example coordinates for testing
+    weather = getWeather.getWeather(lat, lon, place) # Example coordinates for testing
     print(f"Weather data fetched: {weather}")
 
     # --- 3. Send Notification Email ---    
@@ -61,4 +61,5 @@ if __name__ == "__main__":
     # Menlo Park latitude and Longitude at our house
     lat = 37.433
     lon = -122.207
-    main(lat=lat, lon=lon)
+    place = "Menlo Park, CA"  # Example place name
+    main(lat=lat, lon=lon, place=place)

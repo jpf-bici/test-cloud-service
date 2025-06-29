@@ -4,29 +4,29 @@
     "namespace": "fn-5c260656-49db-4abb-87bd-b5b6a640d594",
     "packageVersions": {
       "package1": {
-        "version": "0.0.1",
+        "version": "0.0.2",
         "digest": "9fee3809e7828edcf088af214b8549c13ea1d2697cf53024190bf4fb9d39b269"
       }
     },
     "actionVersions": {
       "package1/__main__": {
-        "version": "0.0.1",
-        "digest": "8685159fa1de3afcd5d4d0122ff6645fed53acf9bf0b5e8018eedffdd2c4a299"
+        "version": "0.0.2",
+        "digest": "6241667eedfb7da62e6df8c5607c4660014ea215b6a89c641c6d0fd2e2ca5a9f"
       },
       "package1/getWeather": {
-        "version": "0.0.1",
-        "digest": "2756d251fcbdff5cc4440ec8cad93aad802e2f0c4bb5b92bf6ec5317c0b69a84"
+        "version": "0.0.2",
+        "digest": "c9b5b1e290e78065c43c409d17f30ccec4ab6ea50c33df2458c9e07fe4efe47e"
       },
       "package1/sendEmail": {
-        "version": "0.0.1",
-        "digest": "1e7c41e134a0dcd0861802e3378b612aafe098ff2e4611d75c576d73ed653477"
+        "version": "0.0.2",
+        "digest": "65b26244e3a2517ad87e68ac5835e81d257632efdb83f96f28b402922c53507b"
       },
       "package1/timeZoneFinder": {
-        "version": "0.0.1",
+        "version": "0.0.2",
         "digest": "0adbb49863bb303d05726d4e886c3e58874113f2f55a24c7fb853327eec1c6df"
       },
       "package1/timezone": {
-        "version": "0.0.1",
+        "version": "0.0.2",
         "digest": "976dafaee492453dad55202dc52c7fb1846bd1f666a72ed7d534e5708c0cbc28"
       }
     }
