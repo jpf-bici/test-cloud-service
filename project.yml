@@ -23,7 +23,7 @@ packages:
     parameters: {} # No specific parameters for the package
     functions:
       - name: weather-info-app # The name of your function
-        source_dir: packages # The directory containing your __main__.py
+        source: ./weather-info-app/packages/package1/ # The directory containing your __main__.py
         runtime: python:3.10 # Specify Python runtime
         main: __main__.py # The entry point file
         

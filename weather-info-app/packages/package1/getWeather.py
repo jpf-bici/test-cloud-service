@@ -15,12 +15,23 @@ import os
 
 api_key = os.getenv("TARGET_API_KEY")
 
-def getWeather(lat, lon, place):
+def getWeather():
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
     target_api_url = os.getenv("TARGET_API_URL")
     api_key = os.getenv("TARGET_API_KEY")
+
+
+    # hard coded values for api
+    # ========================================================
+    lat = 37.433 # Latitude for Menlo Park, CA
+    lon = -122.207 # Longitude for Menlo Park, CA
+    place = "Menlo Park, CA"
+    # ========================================================
+
+    print(f'lat: {lat}, lon: {lon}, place: {place}')
+    print(f"type(lat): {type(lat)}, type(lon): {type(lon)}")
 
     # find timezone for the given lat, long
     loc_timezone = timeZoneFinder.find_timezone(lat, lon)

@@ -9,11 +9,15 @@ import os
 # load_dotenv()
 # ====
 
-import getWeather 
-import sendEmail
+# from .getWeather import getWeather 
+# from .sendEmail import sendEmail
 
+from getWeather import getWeather 
+from sendEmail import sendEmail
 
-def main(lat, lon, place):
+# lat, lon, place
+
+def main():
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
@@ -36,7 +40,7 @@ def main(lat, lon, place):
         return {"statusCode": 500, "body": "Configuration error."}
 
     # --- 2. Fetch data from the API ---
-    weather = getWeather.getWeather(lat, lon, place) # Example coordinates for testing
+    weather = getWeather.getWeather()
     print(f"Weather data fetched: {weather}")
 
     # --- 3. Send Notification Email ---    
@@ -50,7 +54,7 @@ if __name__ == "__main__":
     load_dotenv()
 
     # # Set dummy environment variables for local testing
-    # os.environ["TARGET_API_URL"] = "https://jsonplaceholder.typicode.com/posts/1"
+    # os.environ["TARGET_API_URL"] = "https://api.openweathermap.org/data/2.5/weather"
     # os.environ["SENDER_EMAIL"] = "your_test_sender_email@example.com"
     # os.environ["SENDER_EMAIL_PASSWORD"] = "your_test_password"
     # os.environ["RECEIVER_EMAIL"] = "your_test_receiver_email@example.com"
@@ -59,7 +63,8 @@ if __name__ == "__main__":
 
     # Call the main function
     # Menlo Park latitude and Longitude at our house
-    lat = 37.433
-    lon = -122.207
-    place = "Menlo Park, CA"  # Example place name
-    main(lat=lat, lon=lon, place=place)
+    # lat = 37.433
+    # lon = -122.207
+    # place = "Menlo Park, CA"  # Example place name
+
+    main()
