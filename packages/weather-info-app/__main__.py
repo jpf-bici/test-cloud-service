@@ -1,26 +1,17 @@
 # api-monitor/__main__.py
 
 import os
+import sys
 
 # No 'import dotenv' or 'dotenv.load_dotenv()' needed here
 # DigitalOcean Functions injects environment variables directly from project.yml
-# ====
-# from dotenv import load_dotenv
-# load_dotenv()
-# ====
 
-# from .getWeather import getWeather 
-# from .sendEmail import sendEmail
 
-from getWeather import getWeather 
-from sendEmail import sendEmail
-
-# lat, lon, place
-
-def main():
+def main(args):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
+    Args: args - Digital Ocean Functions passes this parameter.
     """
     print("Function started: Fetching data and sending notification...")
 
@@ -35,36 +26,31 @@ def main():
     smtp_port = int(os.getenv("SMTP_PORT", 587)) # Default to 587 if not set
 
     # Basic validation for essential variables
-    if not all([target_api_url, sender_email, sender_password, receiver_email, smtp_server]):
+    if not all([target_api_url, target_api_key, sender_email, sender_password, receiver_email, smtp_server, smtp_port]):
         print("Error: Missing one or more required environment variables.")
         return {"statusCode": 500, "body": "Configuration error."}
 
-    # --- 2. Fetch data from the API ---
-    weather = getWeather.getWeather()
-    print(f"Weather data fetched: {weather}")
+    try:
+        sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../lib')))
+        from getWeather import getWeather 
+        from sendEmail import sendEmail
 
-    # --- 3. Send Notification Email ---    
-    sendEmail.sendEmail(weather)
+        # --- 2. Fetch data from the API ---
+        weather = getWeather()
+        print(f"Weather data fetched: {weather}")
+
+        # --- 3. Send Notification Email ---    
+        sendEmail(weather)
+
+    except Exception as e:
+        print(f"Error in main function: {str(e)}")
+        return {"statusCode": 500, "body": f"Error: {str(e)}"}
 
 # This part is for local testing if you want to run it without DigitalOcean
 # It's not executed when deployed as a DigitalOcean Function
 if __name__ == "__main__":
-
     from dotenv import load_dotenv
     load_dotenv()
 
-    # # Set dummy environment variables for local testing
-    # os.environ["TARGET_API_URL"] = "https://api.openweathermap.org/data/2.5/weather"
-    # os.environ["SENDER_EMAIL"] = "your_test_sender_email@example.com"
-    # os.environ["SENDER_EMAIL_PASSWORD"] = "your_test_password"
-    # os.environ["RECEIVER_EMAIL"] = "your_test_receiver_email@example.com"
-    # os.environ["SMTP_SERVER"] = "smtp.your_provider.com" # E.g., smtp.gmail.com
-    # os.environ["SMTP_PORT"] = "587"
-
-    # Call the main function
-    # Menlo Park latitude and Longitude at our house
-    # lat = 37.433
-    # lon = -122.207
-    # place = "Menlo Park, CA"  # Example place name
-
-    main()
+    # Call the main function with empty args for local testing
+    main({})

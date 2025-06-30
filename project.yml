@@ -1,46 +1,18 @@
-#apiVersion: 1.0
-
-# project.yml
-# This is a configuration file for a cloud service function that monitors an API
-# and sends email notifications based on the API's response.
-# It is designed to run on a schedule, specifically every hour.
-# The function is written in Python and uses environment variables for configuration.
-# The function's main logic is contained in the __main__.py file located in the api-monitor directory.
-# The function is set up to use a specific Python runtime and has defined routes and triggers.
-# The environment variables include API keys, email credentials, and SMTP server details.
-# This file is used to deploy the function to the cloud service platform.
-# Note: The SENDER_EMAIL_PASSWORD should be securely managed and not hard-coded in production environments
-
-parameters: {} # project scope
-    # param1: value
-environment: {}
-    # env1: value
-
+# Digital Ocean Functions project.yml
 packages:
-  - name: weather-info-app # The name of your package
-    shared: false # This package is not shared with other projects
-    environment: {} # No specific environment variables for the package
-    parameters: {} # No specific parameters for the package
+  - name: weather-info-app
+    environment:
+      TARGET_API_URL: "https://api.openweathermap.org/data/3.0/onecall"
+      TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
+      SENDER_EMAIL: "jpf.test.81@gmail.com"
+      SENDER_PASSWORD: "crwqgtfxihtviutn"
+      RECEIVER_EMAIL: "jorgefpont@gmail.com"
+      SMTP_SERVER: "smtp.gmail.com"
+      SMTP_PORT: "587"
     functions:
-      - name: weather-info-app # The name of your function
-        source: ./weather-info-app/packages/package1/ # The directory containing your __main__.py
-        runtime: python:3.10 # Specify Python runtime
-        main: __main__.py # The entry point file
-        
-        environment: # Define environment variables for your function
-          TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
-          SENDER_EMAIL: "jpf.test.81@gmail.com"
-          SENDER_PASSWORD: "crwqgtfxihtviutn" # <<< USE GENERATED PASSWORD
-          RECEIVER_EMAIL: "jorgefpont@gmail.com"
-          SMTP_SERVER: "smtp.gmail.com"
-          SMTP_PORT: "587"
-
-        routes: # No HTTP route needed for a scheduled function
-          - method: POST
-            path: /
-        
-        # Add a trigger for scheduling
-        triggers:
-          - name: hourly-schedule
-            type: schedule
-            schedule: "0 * * * *" # Cron expression for every hour (minute 0 of every hour)
+      - name: __main__
+        runtime: python:3.9
+        web: true
+        annotations:
+          # Schedule the function to run every hour
+          schedule: "0 * * * *"

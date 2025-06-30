@@ -1,15 +1,14 @@
 # Exclude Python bytecode directories
 __pycache__/
-
-# Exclude common IDE/editor files (optional, but good practice)
-.vscode/
-.idea/
-*.iml
-.DS_Store
-
-# Exclude Python virtual environments (if any)
-venv/
-.venv/
-
-# Exclude dotenv files if you use them locally
+*.pyc
+**/__pycache__/
+.git/
+*.log
 .env
+# Exclude helper modules from being deployed as separate functions
+**/getWeather.py
+**/sendEmail.py
+**/timeZoneFinder.py
+**/timezone.py
+**/__pycache__/
+packages/weather-info-app/lib/

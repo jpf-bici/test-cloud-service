@@ -1,0 +1,30 @@
+# project.yml
+# This line MUST be at the very top, with no leading spaces.
+apiVersion: 1.0
+
+# This 'functions' key MUST be the top-level definition for your function(s).
+functions:
+  # This dash '-' indicates an item in a list. Each item is a function definition.
+  - name: weather-notifier-function # This is the unique name of your deployed function on DigitalOcean
+    runtime: python:3.9               # Python 3.9 runtime
+    main: __main__.py                 # The entry point function within the source directory
+    # CRUCIAL: 'source_dir' must point to the directory containing your __main__.py
+    # This path is relative to where your project.yml file is.
+    source_dir: weather-info-app      # Points to where all your Python files are
+
+    environment: # Environment variables for your function
+      TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
+      SENDER_EMAIL: "jpf.test.81@gmail.com"
+      SENDER_PASSWORD: "crwqgtfxihtviutn" # Your App Password
+      RECEIVER_EMAIL: "jorgefpont@gmail.com"
+      SMTP_SERVER: "smtp.gmail.com"
+      SMTP_PORT: "587"
+
+    routes: # Defines an HTTP route (optional for scheduled functions but often included by default)
+      - method: POST
+        path: /
+
+    triggers: # Defines how your function will be invoked
+      - name: hourly-schedule
+        type: schedule
+        schedule: "0 * * * *" # Cron expression for every hour (minute 0)
