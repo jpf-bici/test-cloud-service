@@ -5,10 +5,3 @@ __pycache__/
 .git/
 *.log
 .env
-# Exclude helper modules from being deployed as separate functions
-**/getWeather.py
-**/sendEmail.py
-**/timeZoneFinder.py
-**/timezone.py
-**/__pycache__/
-packages/weather-info-app/lib/

@@ -3,14 +3,6 @@ import timezone
 import timeZoneFinder
 
 import requests
-
-# No 'import dotenv' or 'dotenv.load_dotenv()' needed here
-# DigitalOcean Functions injects environment variables directly from project.yml
-# ====
-# from dotenv import load_dotenv
-# load_dotenv()
-# ====
-
 import os
 
 api_key = os.getenv("TARGET_API_KEY")
