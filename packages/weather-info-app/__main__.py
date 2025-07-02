@@ -53,11 +53,11 @@ def main(args):
         return {"statusCode": 500, "body": "Configuration error."}
 
     try:
-        # --- 2. Fetch data from the API ---
+        # --- Fetch data from the API ---
         weather = getWeather(lat, lon, place, loc_timezone)
         print(f"Weather data fetched: {weather}")
 
-        # --- 3. Send Notification Email ---    
+        # --- Send Notification Email ---    
         sendEmail(weather, place)
 
     except Exception as e:
@@ -170,13 +170,13 @@ def sendEmail(notification_content="This is a test", notification_subject="Weath
     # If you want to customize the subject or content based on the API data,
     # you can modify the notification_subject and notification_content variables here.
     # For now, we will use a static subject and content for testing.
-    notification_subject = "Test Email Subject"
+    #notification_subject = "Test Email Subject"
 
     try:
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = receiver_email
-        msg['Subject'] = notification_subject
+        msg['Subject'] = "Weather for " + notification_subject
         msg.attach(MIMEText(notification_content, 'plain'))
 
         print(f"Attempting to send email from {sender_email} to {receiver_email} via {smtp_server}:{smtp_port}")
@@ -198,7 +198,7 @@ def sendEmail(notification_content="This is a test", notification_subject="Weath
     return {"statusCode": 200, "body": "Function execution complete."}
 
 # =========================================================================
-# Convert time function
+# --- Convert time function
 # =========================================================================
 
 def convert_utc_seconds_to_us_timezone(seconds_since_epoch, timezone_name):
@@ -262,11 +262,11 @@ def find_timezone(latitude, longitude):
     timezone_name = find_timezone(latitude, longitude)
     print(f"The time zone for ({latitude}, {longitude}) is: {timezone_name}") """
 
+# =========================================================================
 # This part is for local testing if you want to run it without DigitalOcean
 # It's not executed when deployed as a DigitalOcean Function
 if __name__ == "__main__":
     from dotenv import load_dotenv
     load_dotenv()
-
     # Call the main function with empty args for local testing
     main({})
