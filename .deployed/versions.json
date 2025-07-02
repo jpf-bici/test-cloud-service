@@ -4,14 +4,14 @@
     "namespace": "fn-5c260656-49db-4abb-87bd-b5b6a640d594",
     "packageVersions": {
       "weather-info-app": {
-        "version": "0.0.13",
-        "digest": "6a89c25345e3e63f0c4c86664df448e5cd005cb02effabfa95f787941cb9f1d0"
+        "version": "0.0.15",
+        "digest": "d0ff793b9ccfe11ff111591e7fa7678adc451f19945a58c988872d9268ae23e1"
       }
     },
     "actionVersions": {
       "weather-info-app/__main__": {
-        "version": "0.0.13",
-        "digest": "d577ec29ddd91347c58938f2733a167d8060f566453d0fe54f03cc5e0d209bc4"
+        "version": "0.0.15",
+        "digest": "8790054d33598ae0c23b640b1ca849ca18b3ca64f282f95801b0ca99b5827d1f"
       }
     }
   }

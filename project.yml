@@ -21,6 +21,8 @@ packages:
       - name: __main__
         runtime: python:3.9
         web: true
-        annotations:
-          # Schedule the function to run every hour
-          schedule: "0 * * * *"
+        triggers:
+        - name: "3 hour trigger"
+          sourceType: scheduler
+          sourceDetails: 
+            cron: "0 */3 * * *"
