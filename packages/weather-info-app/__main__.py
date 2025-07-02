@@ -23,8 +23,9 @@ def main(args):
     """
     print("Function started: Fetching data and sending notification...")
 
-    # --- 1. Get configuration from environment variables ---
-    # These variables are set in your project.yml
+    # Get configuration from environment variables
+
+    # These variables are set in your project.yml and in .env
     target_api_url = os.getenv("TARGET_API_URL")
     target_api_key = os.getenv("TARGET_API_KEY")
     sender_email = os.getenv("SENDER_EMAIL")
@@ -37,49 +38,49 @@ def main(args):
     if not all([target_api_url, target_api_key, sender_email, sender_password, receiver_email, smtp_server, smtp_port]):
         print("Error: Missing one or more required environment variables.")
         return {"statusCode": 500, "body": "Configuration error."}
+    
+    # Get location from environmental variables
+    lat = float(os.getenv("LATTITUDE"))
+    lon = float(os.getenv("LONGITUDE"))
+    place = os.getenv("PLACE")
+    loc_timezone = os.getenv("LOC_TIMEZONE")
+    # Note: timezonefinder is not used here because it
+    # could not import timezonefinder due to DigitalOcean Function limitations
+
+    # Basic validation for location variables
+    if not all([lat, lon, place, loc_timezone]):
+        print("Error: Missing one or more required location variables (LATTITUDE, LONGITUDE, PLACE, LOC_TIMEZONE).")
+        return {"statusCode": 500, "body": "Configuration error."}
 
     try:
         # --- 2. Fetch data from the API ---
-        weather = getWeather()
+        weather = getWeather(lat, lon, place, loc_timezone)
         print(f"Weather data fetched: {weather}")
 
         # --- 3. Send Notification Email ---    
-        sendEmail(weather)
+        sendEmail(weather, place)
 
     except Exception as e:
         print(f"Error in main function: {str(e)}")
         return {"statusCode": 500, "body": f"Error: {str(e)}"}
     
 # =========================================================================
-# getWeather function   
+# --- getWeather function   
 # =========================================================================
-def getWeather():
+def getWeather(lat, lon, place, loc_timezone):
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
     target_api_url = os.getenv("TARGET_API_URL")
     api_key = os.getenv("TARGET_API_KEY")
-
-
-    # hard coded values for api
-    # ========================================================
-    lat = 37.433 # Latitude for Menlo Park, CA
-    lon = -122.207 # Longitude for Menlo Park, CA
-    place = "Menlo Park, CA"
-    # ========================================================
-
-    print(f'lat: {lat}, lon: {lon}, place: {place}')
-    print(f"type(lat): {type(lat)}, type(lon): {type(lon)}")
-
-    # find timezone for the given lat, long
-    loc_timezone = find_timezone(lat, lon)
     
+    # parameters required by API
     params = {
         "lat": lat,
         "lon": lon,
         "appid": api_key,
-        "units": "metric"  # or "imperial" for Fahrenheit
-    }
+        "units": "metric"}  # or "imperial" for Fahrenheit
+
     target_api_url = f"{target_api_url}?{requests.compat.urlencode(params)}"
     print(f"Target API URL: {target_api_url}")
     
@@ -91,14 +92,6 @@ def getWeather():
     if not target_api_url:
         print("Error: TARGET_API_URL environment variable is not set.")
         return {"statusCode": 500, "body": "Configuration error."}
-    # Ensure the target API URL is valid
-    if not target_api_url.startswith("http"):
-        print("Error: TARGET_API_URL is not a valid URL.")
-        return {"statusCode": 500, "body": "Configuration error."}
-    # Ensure the API key is valid
-    if not api_key or len(api_key) < 32:  # Assuming a valid API key is at least 32 characters
-        print("Error: TARGET_API_KEY is not valid.")
-        return {"statusCode": 500, "body": "Configuration error."}  
 
     print("Configuration is valid. Proceeding with API request...")
 
@@ -109,12 +102,10 @@ def getWeather():
         api_data = response.json()
         print(f"Successfully fetched data from API:")
 
-    # --- 3. Process the data (Example: Extract a specific field) ---
-
+    # --- 3. Process the data ---
         # Extract the 'current' data
         current_weather = api_data["current"]
-
-        # Now you can access specific pieces of information from current_weather
+        # Access specific pieces of information from current_weather
         current_time = current_weather["dt"]
         temperature = current_weather["temp"]
         feels_like = current_weather["feels_like"]
@@ -122,7 +113,7 @@ def getWeather():
         wind_speed = current_weather["wind_speed"]
         wind_direction = current_weather["wind_deg"]
 
-        # Convert the timestamp to a human-readable format
+        # Convert the timestamp to a human-readable format, need timezone
         current_time = convert_utc_seconds_to_us_timezone(current_time, loc_timezone)
 
         # The 'weather' key is a list of dictionaries, so access the first item's description
@@ -152,14 +143,14 @@ def getWeather():
 
 
 # =========================================================================
-# sendEmail function
+# --- sendEmail function
 # =========================================================================
-def sendEmail(notification_content="This is a test email content."):
+def sendEmail(notification_content="This is a test", notification_subject="Weather Notification"):
     """
     Main function for the DigitalOcean Function.
     This function will be triggered by the schedule.
     """
-    print("Function started: Fetching data and sending notification...")
+    print("sendEmail function started: Fetching data and sending notification...")
 
     # --- 1. Get configuration from environment variables ---
     # These variables are set in your project.yml
@@ -169,20 +160,17 @@ def sendEmail(notification_content="This is a test email content."):
     receiver_email = os.getenv("RECEIVER_EMAIL")
     smtp_server = os.getenv("SMTP_SERVER")
     smtp_port = int(os.getenv("SMTP_PORT", 587)) # Default to 587 if not set
-    notification_subject = "Test Email Subject"
-
-    # Basic validation for essential variables; removed api url
+    
+    # --- 1.1. Validate environment variables ---
     if not all([sender_email, sender_password, receiver_email, smtp_server]):
         print("Error: Missing one or more required environment variables.")
         return {"statusCode": 500, "body": "Configuration error."}
-
-    # --- 2. Fetch data from the API ---
-    # removed, not needed for email test
-
-    # --- 4. Send Notification Email ---
-
-    # notification_subject = "Test Email Subject"
-    # notification_content = "This is a test email content."
+    
+    # --- 2. Prepare the email content ---
+    # If you want to customize the subject or content based on the API data,
+    # you can modify the notification_subject and notification_content variables here.
+    # For now, we will use a static subject and content for testing.
+    notification_subject = "Test Email Subject"
 
     try:
         msg = MIMEMultipart()
@@ -215,7 +203,6 @@ def sendEmail(notification_content="This is a test email content."):
 
 def convert_utc_seconds_to_us_timezone(seconds_since_epoch, timezone_name):
     """Converts seconds since epoch (UTC) to a specific US timezone.
-
     Args:
         seconds_since_epoch: The time in seconds since the Unix epoch (UTC).
         timezone_name: A string representing the desired US timezone (e.g., 'US/Eastern', 'US/Pacific').
@@ -251,7 +238,7 @@ def convert_utc_seconds_to_us_timezone(seconds_since_epoch, timezone_name):
     #     # Output: Time in US/Eastern: 2023-03-14 19:00:00-04:56
 
 # =========================================================================
-# find timezone function
+# find timezone function // NOT BEING USED
 # ==========================================================================
 
 def find_timezone(latitude, longitude):
@@ -265,7 +252,7 @@ def find_timezone(latitude, longitude):
     # Initialize TimezoneFinder
     # tf = TimezoneFinder()
     # timezone_name = tf.timezone_at(lng=longitude, lat=latitude)
-    return "unknown timezone"  # Placeholder for actual implementation
+    return "US/Pacific"  # Placeholder for actual implementation
 
 
 """ if __name__ == "__main__":

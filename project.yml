@@ -4,6 +4,14 @@ packages:
     environment:
       TARGET_API_URL: "https://api.openweathermap.org/data/3.0/onecall"
       TARGET_API_KEY: "a83c5b4eede4d997dc83a9105c152aa4"
+      
+      # location data
+      # Menlo Park, California
+      LATTITUDE: "37.433"
+      LONGITUDE: "-122.207"
+      PLACE: "Menlo Park, CA"
+      LOC_TIMEZONE: "US/Pacific"
+    
       SENDER_EMAIL: "jpf.test.81@gmail.com"
       SENDER_PASSWORD: "crwqgtfxihtviutn"
       RECEIVER_EMAIL: "jorgefpont@gmail.com"
